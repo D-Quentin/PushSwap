@@ -29,6 +29,8 @@ void main(int ac, char** av)
     int b = 0;
     list = initialization(list, ac, av);
     while (1) {//(check_end(list, ac) != 0) {
+        if (check_end(list, ac) == 0)
+            break;
         while (list.a[0] < list.a[1]) {
             list = pb(list);
             my_putchar(' ');
