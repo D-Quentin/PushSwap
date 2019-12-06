@@ -1,4 +1,3 @@
-
 /*
 ** EPITECH PROJECT, 2019
 ** pushswap
@@ -13,7 +12,9 @@ typedef struct my_lists {
     int	*b;
     int sa;
     int sb;
-    long long average;
+    int fa;
+    char **tab1;
+    char **tab2;
 } list_t;
 
 list_t initialization(list_t list, int ac, char **av);
@@ -26,48 +27,72 @@ list_t rb(list_t list);
 list_t ra(list_t list);
 list_t rrb(list_t list);
 list_t rra(list_t list);
-list_t moyenne(list_t list);
-float av_part1(list_t list);
-float av_part2(list_t list);
+char *my_put_binary_nbr(int nb);
+
 void main(int ac, char** av)
 {
     list_t list; 
     int i = 0;
     int j = 0;
     int b = 0;
-    int x = 0;
-    float moy1;
-    float moy2;
+    int k = 0;
+    int n = 0;
     list = initialization(list, ac, av);
-    while (1) {
-        //moy1 = av_part1(list);
-        //moy2 = av_part2(list);
+    while (i != 32) {
         if (check_end(list, ac) == 0)
             break;
-        while (list.a[0] <= list.a[1]) {
-            list = pb(list);
-            my_putchar(' ');
+        while (j != list.fa) {
+            if (list.tab1[j][i] == '1') {
+                list.tab2[k] = list.tab1[j];
+                k++;
+                list = pb(list);
+                my_putchar(' ');
+                list = rb(list);
+                my_putchar(' ');
+            } else {
+                list.tab1[n] = list.tab1[j];
+                n++;
+                list = ra(list);
+                my_putchar(' ');
+            }
             j++;
         }
-        while (list.a[0] > list.a[1]) {
+        k = 0;
+        while (list.sa != list.fa) {
+            list = pa(list);
+            my_putchar(' ');
+            list = ra(list);
+            my_putchar(' ');
+            list.tab1[n] = list.tab2[k];
+            k++;
+            n++;
+        }
+        k = 0;
+        n = 0;
+        j = 0;
+        i++;
+    }
+    i = 0;
+    while (i != list.fa) {
+        if (list.a[0] < 0) {
+            list = pb(list);
+        } else {
             list = ra(list);
             my_putchar(' ');
         }
-        if (check_end(list, ac) == 0)
-            break;
-        while (j != 0) {
-            list = pa(list);
-            if (check_end(list, ac) == 0) {
-                b = 1;
-                break;
-            }
-            my_putchar(' ');
-            j--;
-        }
-        if (b == 1)
-            break;
+        i++;
     }
-     /*
+    while (list.sa != list.fa) {
+        list = rrb(list);
+        my_putchar(' ');
+        list = pa(list);
+        my_putchar(' ');
+    }
+    my_putstr("sb");
+    my_putchar('\n');
+
+    /*
+    i = 0;
     while (i != list.sa) {
         my_put_nbr(list.a[i]);
         my_putchar(' ');
@@ -87,14 +112,46 @@ list_t initialization(list_t list, int ac, char **av)
     list.b  = malloc(sizeof(int) * ac);
     list.sa = ac - 1;
     list.sb = 0;
+    list.fa = list.sa;
     while (i != list.sa) {
         list.a[i] = my_getnbr(av[i + 1]);
         i++;
     }
-    list = moyenne(list);
+    list.tab1 = malloc(sizeof(char*) * list.fa);
+    list.tab2 = malloc(sizeof(char*) * list.fa);
+    i = 0;
+    while (i != 32) {
+        list.tab1[i] = malloc(sizeof(char) * 32);
+        list.tab2[i] = malloc(sizeof(char) * 32);
+        i++;
+    }
+    i = 0;
+    while (i != list.fa) {
+        list.tab1[i] = my_put_binary_nbr(list.a[i]);
+        i++;
+    }
     return (list);
 }
-    
+
+char *my_put_binary_nbr(int nb)
+{
+    char *nbr = malloc(sizeof(char) * 32);
+    int i = 0;
+
+    if (nb < 0) {
+        nb = nb * -1;
+    }
+    while (nb >= 2) {
+        if (nb % 2 == 0)
+            nbr[i] = '0';
+        else
+            nbr[i] = '1';
+        i++;
+        nb = nb / 2;
+    }
+    nbr[i] = nb + '0';
+    return (nbr);
+}
 
 int check_end(list_t list, int ac)
 {
@@ -108,49 +165,7 @@ int check_end(list_t list, int ac)
         }
         i++;
     }
-    my_putchar('\n');
     return (0);
-}
-
-list_t moyenne(list_t list)
-{
-    list.average = 0;
-    int i = 0;
-
-    while (i != list.sa) {
-        list.average += list.a[i];
-        i++;
-    }
-    list.average = list.average / i;
-    return (list);
-}
-
-float av_part1(list_t list)
-{
-    long long nbr = 0;
-    int i = 0;
-    float nb;
-    
-    while (i != list.sa/2) {
-        nbr += list.a[i];
-        i++;
-    }
-    nb = nbr / i;
-    return (nb);
-}
-
-float av_part2(list_t list)
-{
-    long long nbr = 0;
-    int i = list.sa/2;
-    float nb;
-    
-    while (i != list.sa) {
-        nbr += list.a[i];
-        i++;
-    }
-    nb = nbr / (i - list.sa/2);
-    return (nb);
 }
 
 list_t rra(list_t list)
@@ -203,7 +218,7 @@ list_t ra(list_t list)
 
 list_t rb(list_t list)
 {
-    int b = list.a[0];
+    int b = list.b[0];
     int *tmp = malloc(sizeof(int) * (list.sa + list.sb + 1));
     int i = 1;
 
