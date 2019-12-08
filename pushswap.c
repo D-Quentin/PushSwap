@@ -69,6 +69,7 @@ void main(int ac, char** av)
             if (list.tab1[j][i] == '1') {
                 list.tab2[k] = list.tab1[j];
                 k++;
+                //my_put_nbr(list.ida->begin->nb);
                 list = pb(list);
                 my_putchar(' ');
                 list = rb(list);
@@ -345,9 +346,7 @@ list_t rrb(list_t list)
     }
     tmp->prev = NULL;
     list.idb->end->next = NULL;
-    my_putchar('t');
     list.idb->begin->prev = tmp;
-    my_putchar('t');
     list.idb->begin = tmp;
     
     my_putstr("rrb");
@@ -357,19 +356,17 @@ list_t rrb(list_t list)
 list_t ra(list_t list)
 {
     node_t *tmp;
-
+    
     tmp = list.ida->begin;
     if (list.sa != 1)
         list.ida->begin = list.ida->begin->next;
     else {
-        list.ida->begin = list.ida->begin;
         my_putstr("ra");
         return (list);
     }
     tmp->next = NULL;
     list.ida->end->next = tmp;
     list.ida->end = tmp;
-
     my_putstr("ra");
     return (list);
 }
@@ -381,8 +378,10 @@ list_t rb(list_t list)
     tmp = list.idb->begin;
     if (list.sb != 1)
         list.idb->begin = list.idb->begin->next;
-    else
-        list.idb->begin = list.idb->begin;
+    else {
+        my_putstr("rb");
+        return (list);
+    }
     tmp->next = NULL;
     list.idb->end->next = tmp;
     list.idb->end = tmp;
@@ -394,8 +393,9 @@ list_t rb(list_t list)
 list_t pb(list_t list)
  {
     node_t *tmp;
-
+    
     tmp = list.ida->begin;
+        
     if (list.idb->begin == NULL) {
         list.ida->begin = tmp->next;
         tmp->next = NULL;
