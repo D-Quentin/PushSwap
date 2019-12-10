@@ -54,6 +54,7 @@ list_t ra(list_t list);
 list_t rrb(list_t list);
 list_t rra(list_t list);
 char *my_put_binary_nbr(int nb);
+void my_str(char *str);
 
 void main(int ac, char** av)
 {
@@ -69,25 +70,19 @@ void main(int ac, char** av)
             if (list.tab1[j][i] == '1') {
                 list.tab2[k] = list.tab1[j];
                 k++;
-                //my_put_nbr(list.ida->begin->nb);
                 list = pb(list);
-                my_putchar(' ');
                 list = rb(list);
-                my_putchar(' ');
             } else {
                 list.tab1[n] = list.tab1[j];
                 n++;
                 list = ra(list);
-                my_putchar(' ');
             }
             j++;
         }
         k = 0;
         while (list.sa != list.fa) {
             list = pa(list);
-            my_putchar(' ');
             list = ra(list);
-            my_putchar(' ');
             list.tab1[n] = list.tab2[k];
             k++;
             n++;
@@ -102,21 +97,16 @@ void main(int ac, char** av)
         list.a = list.ida->begin;
         if (list.a->nb < 0) {
             list = pb(list);
-            my_putchar(' ');
             list = rb(list);
-            my_putchar(' ');
         } else {
             list = ra(list);
-            my_putchar(' ');
         }
         i++;
     }
     while (list.sa != list.fa) {
         list = pa(list);
-        my_putchar(' ');
     }
-    my_putstr("sb");
-    my_putchar('\n');
+    my_str("sb\n");
     /*
     list.a = list.ida->begin;
     i = 0;
@@ -282,6 +272,11 @@ list_t initialization(list_t list, int ac, char **av)
     return (list);
 }
 
+void my_str(char *str)
+{
+    write(1, str, 3);
+}
+
 char *my_put_binary_nbr(int nb)
 {
     char *nbr = malloc(sizeof(char) * 32);
@@ -361,13 +356,13 @@ list_t ra(list_t list)
     if (list.sa != 1)
         list.ida->begin = list.ida->begin->next;
     else {
-        my_putstr("ra");
+        my_str("ra ");
         return (list);
     }
     tmp->next = NULL;
     list.ida->end->next = tmp;
     list.ida->end = tmp;
-    my_putstr("ra");
+    my_str("ra ");
     return (list);
 }
 
@@ -379,14 +374,14 @@ list_t rb(list_t list)
     if (list.sb != 1)
         list.idb->begin = list.idb->begin->next;
     else {
-        my_putstr("rb");
+        my_str("rb ");
         return (list);
     }
     tmp->next = NULL;
     list.idb->end->next = tmp;
     list.idb->end = tmp;
     
-    my_putstr("rb");
+    my_str("rb ");
     return (list);
 }
 
@@ -409,7 +404,7 @@ list_t pb(list_t list)
     
     list.sa -= 1;
     list.sb += 1;
-    my_putstr("pb");
+    my_str("pb ");
     return (list);
 }
 
@@ -430,7 +425,7 @@ list_t pa(list_t list)
     }    
     list.sb -= 1;
     list.sa += 1;
-    my_putstr("pa");
+    my_str("pa ");
     return (list);
 }
 
