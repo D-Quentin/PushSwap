@@ -56,7 +56,7 @@ list_t rra(list_t list);
 char *my_put_binary_nbr(int nb);
 void my_str(char *str);
 
-void main(int ac, char** av)
+int main(int ac, char** av)
 {
     list_t list; 
     int i = 0;
@@ -181,7 +181,7 @@ void main(int ac, char** av)
     }
     my_putchar('\n');
     */
-    return;  
+    return (0);
 }
 /*
 list_t initialization(list_t list, int ac, char **av)
