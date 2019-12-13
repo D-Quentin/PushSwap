@@ -6,6 +6,9 @@
 ##
 
 SRC     =       pushswap.c	\
+		algo.c		\
+		initialization.c\
+		op.c		\
 
 CPPFLAGS =	-I ./include
 
