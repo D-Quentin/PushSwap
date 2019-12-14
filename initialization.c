@@ -28,6 +28,7 @@ list_t initialization(list_t list, int ac, char **av)
     list.b->next = NULL;
     return (list);
 }
+
 list_t initialization3(list_t list, int ac, char **av)
 {
     int i = 0;

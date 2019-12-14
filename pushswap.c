@@ -9,8 +9,8 @@
 
 int main(int ac, char** av)
 {
-    list_t list; 
-    
+    list_t list;
+
     list = initialization(list, ac, av);
     list = initialization2(list, ac, av);
     list = initialization3(list, ac, av);
